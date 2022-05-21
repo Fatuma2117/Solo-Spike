@@ -1,28 +1,49 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
 import App from './components/App.jsx';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-// Provider allows us to use redux within our react app
+import { put, takeEvery } from 'redux-saga/effects';
+import createSagaMiddleware from 'redux-saga';
 import { Provider } from 'react-redux';
 import logger from 'redux-logger';
+import axios from 'axios';
 
-// // Reducer that holds our results
-const random = (state = {}, action) => {
-    if(action.type === 'SET_RANDOM') {
-        return action.payload;
+
+function* fetchBooks(action) {
+    const response = yield axios({
+      method: 'GET',
+      url: `/books/${action.payload}`
+    });
+  
+    yield put({
+      type: 'NEW_BOOKS',
+      payload: response.data
+    })
+  }
+
+const books = (state = [], action) => {
+    if (action.type === 'NEW_BOOKS') {
+      console.log('array of books:', action.payload)
+      return action.payload
     }
-    return state;
-}
+    return state
+  }
 
-// // Create one store that all components can use
+
+function* rootSaga() {
+    yield takeEvery('GET_BOOKS', fetchBooks)
+  }
+  
+  
+
+  const sagaMiddleware = createSagaMiddleware();
 const storeInstance = createStore(
     combineReducers({
-      random
+      books
     }),
-    applyMiddleware(logger),
+    applyMiddleware(logger,sagaMiddleware),
 );
-
+sagaMiddleware.run(rootSaga);
 ReactDOM.render(<Provider store={storeInstance}><App /></Provider>, 
     document.getElementById('root'));
 // registerServiceWorker();
