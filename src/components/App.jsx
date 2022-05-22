@@ -1,71 +1,58 @@
 import axios from 'axios';
-import { useState} from 'react'
+import react from 'react'
+import { useState,useEffect} from 'react'
 import { useDispatch, useSelector} from 'react-redux'
 
 
 function App(){
 
-const dispatch = useDispatch();
 
-const [search,setSearch]=useState([])
+const [books,setBooks]=useState('');
+ 
+ useEffect(()=>{
 
-const books = useSelector((store)=>store.books)
 
-const sendSearch = () =>{
-   dispatch({
-       type: 'GET_BOOKS',
-       payload: search
-   })
+ })
+
+const getBooks= () =>{
+    axios({
+      method: 'GET',
+      url: "http://openlibrary.org/search/authors.json?q=twain&limit=3"
+    }).then((response) => {
+      response.
+      console.log(response.data);
+      setBooks([response.data]);
+    })
 }
 
 
-function getGifs(){
-  axios({
-    method: 'GET',
-    url: '/books'
-  }).then((response) => {
-    console.log(response.data);
-    // setSearch([response.data.data]);
-  }).catch((error) => {
-    console.log('errorrrrr opps')
-  })
 
-}
-// console.log(books)
+
+  
 
 return(
 
+  <>
+  <div>
+  {/* <h1>Search</h1>
+   <input onChange={(e)=>{setSearch(e.target.value)}}></input>
+  <button>🔎</button> */}
+
+
+
+
+
+
+
+  </div>
+
   
-    <div>
-            <h1>Search</h1>
-            <input onChange={(e)=>{setSearch(e.target.value)}}></input>
   
-            <button onClick={sendSearch}>🔎</button>
-
-            { books.items &&
-
-
-books.map((book,i)=>{
-  return(
-      <p key={i}> {book.items.volumeInfo.title}   </p>
-  
-    
-  )
-})
-
-
-}
-
-
-
-
-
-
-
-    </div>
-
-
+  </>
 )
+
+
+
 }
 
 export default App;
