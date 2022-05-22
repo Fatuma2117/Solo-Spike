@@ -1,4 +1,4 @@
-import react from 'react'
+
 
 function Search({ search, searchResults }) {
 
@@ -9,8 +9,8 @@ function Search({ search, searchResults }) {
 
     return (
         <>
-            <h1>Search</h1>
-            <input
+            <h1>Book Search 📚</h1>
+            <input className='input'
                 type='text' placeholder='Enter a book name'
                 value={search}
                 onChange={handleSearch}>
