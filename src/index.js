@@ -12,7 +12,7 @@ import axios from 'axios';
 function* fetchBooks(action) {
     const response = yield axios({
       method: 'GET',
-      url: `/books`
+      url: `/books/${action.payload}`
     });
     yield put({
       type: 'NEW_BOOKS',

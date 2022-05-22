@@ -45,11 +45,12 @@ function App() {
     setSearch(search)
     //// this chunk is from stackOverFlow
     /// how to get rid search spaces .join("") = no spaces and filters 
+    /// .include checks to see if (search) is there returns boolean
     if (search !== "") {
       const bookList = booksArray.filter((book) => {
-        return Object.values(book)
+        return Object.values(book) // ?????????? Ask matt
           .join("")
-          .includes(search.toLowerCase());
+          .includes(search);
       })
       //// search results will have the filtered booksArray
       setSearchResults(bookList)
@@ -80,7 +81,7 @@ function App() {
       <div className='container'>
         {/* {JSON.stringify(books)} */}
 
-        {/* pass search and searchResults as props to searchh component */}
+        {/* pass search and searchResults as props to search component */}
         <Search search={search} searchResults={getSearchResults} />
 
 
@@ -95,8 +96,17 @@ function App() {
         </ul>
 
 
-        {/* {books.docs && books.docs.name }
-{books.docs ? {books.docs.name}  ; <p> This didn't work! </p>} */}
+    {/* Last step is to loop through searchResults  if else */}
+
+
+    {/* <ul >
+          {searchResults &&
+            searchResults.map((book, i) => {
+              return (<li key={i} className='list-book'>{book}
+              </li>
+              );
+            })}
+        </ul> */}
 
 
       </div>
