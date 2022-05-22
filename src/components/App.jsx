@@ -46,12 +46,11 @@ function App() {
   const getSearchResults = (search) => {
     setSearch(search)
     /////// this chunk is from stackOverFlow
-    /////// how to get rid search spaces 
+    /////// how to get rid search spaces  and filters 
     if (search !== "") {
       const bookList = booksArray.filter((book) => {
         return Object.values(book)
-          .join(" ")
-          .toLowerCase()
+          .join("")
 					.includes(search.toLowerCase());
       })
       //// search results will have the filtered booksArray
