@@ -21,3 +21,25 @@
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
   }
+
+  .container {
+    width: 90%;
+    margin: auto;
+    justify-content: center;
+    text-align: center;
+  }
+  .list{
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 20px;
+    color:white;
+  }
+
+  .list-book{
+    list-style: none;
+    background-color: rgb(51, 85, 51) ;
+    padding: 10px;
+    margin: 10px;
+    width: 45%;
+  }
