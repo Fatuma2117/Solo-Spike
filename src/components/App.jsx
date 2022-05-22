@@ -1,61 +1,71 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useDispatch} from 'react-redux'
-import{useSelector} from 'react-redux'
-
-function App (){
-
-  const books = useSelector(store => store.books);
-  const dispatch = useDispatch();
+import { useState} from 'react'
+import { useDispatch, useSelector} from 'react-redux'
 
 
-const [search,setSearch]=useState('')
-const[newBooks,setNewBooks]=useState('')
+function App(){
 
-const getBooks = () =>{
+const dispatch = useDispatch();
+
+const [search,setSearch]=useState([])
+
+const books = useSelector((store)=>store.books)
+
+const sendSearch = () =>{
    dispatch({
        type: 'GET_BOOKS',
        payload: search
    })
+}
 
-  dispatch({
-    type:'FETCH_BOOKS'
+
+function getGifs(){
+  axios({
+    method: 'GET',
+    url: '/books'
+  }).then((response) => {
+    console.log(response.data);
+    // setSearch([response.data.data]);
+  }).catch((error) => {
+    console.log('errorrrrr opps')
   })
+
 }
+// console.log(books)
 
+return(
 
-
-
-
-
-
-
-
-
-
-const handleClick =() =>{
-    getBooks();
-   
-}
-  return(
-
-   
-      
+  
     <div>
-       <h1>Books API's</h1>
             <h1>Search</h1>
             <input onChange={(e)=>{setSearch(e.target.value)}}></input>
-       
- 
-            <button onClick={handleClick}>🔎</button>
+  
+            <button onClick={sendSearch}>🔎</button>
 
-        <img>{}</img>
+            { books.items &&
 
-            
-      
-    </div>
+
+books.map((book,i)=>{
+  return(
+      <p key={i}> {book.items.volumeInfo.title}   </p>
+  
+    
   )
+})
+
+
+}
+
+
+
+
+
+
+
+    </div>
+
+
+)
 }
 
 export default App;

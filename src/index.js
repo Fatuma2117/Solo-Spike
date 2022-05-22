@@ -12,12 +12,11 @@ import axios from 'axios';
 function* fetchBooks(action) {
     const response = yield axios({
       method: 'GET',
-      url: `/books/${action.payload}`
+      url: `/books`
     });
-  
     yield put({
       type: 'NEW_BOOKS',
-      payload: response.data
+  
     })
   }
 
@@ -44,6 +43,8 @@ const storeInstance = createStore(
     applyMiddleware(logger,sagaMiddleware),
 );
 sagaMiddleware.run(rootSaga);
-ReactDOM.render(<Provider store={storeInstance}><App /></Provider>, 
+ReactDOM.render(<Provider 
+store={storeInstance}
+><App /></Provider>, 
     document.getElementById('root'));
 // registerServiceWorker();
