@@ -1,23 +1,21 @@
 import axios from 'axios';
-import react from 'react'
 import { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import Search from './Search'
 import './App.css'
 
 
 
 function App() {
-
-
-  const [books, setBooks] = useState([]);
-  const [search, setSearch] = useState('')
-  const [searchResults, setSearchResults] = useState([])
   useEffect(() => {
     getOpenLib();
     // getComics();
 
   }, [])
+
+  const [books, setBooks] = useState([]);
+  const [search, setSearch] = useState('')
+  const [searchResults, setSearchResults] = useState([])
+
 
   /// get request to API with author params
   const getOpenLib = () => {
@@ -45,13 +43,13 @@ function App() {
 
   const getSearchResults = (search) => {
     setSearch(search)
-    /////// this chunk is from stackOverFlow
-    /////// how to get rid search spaces  and filters 
+    //// this chunk is from stackOverFlow
+    /// how to get rid search spaces .join("") = no spaces and filters 
     if (search !== "") {
       const bookList = booksArray.filter((book) => {
         return Object.values(book)
           .join("")
-					.includes(search.toLowerCase());
+          .includes(search.toLowerCase());
       })
       //// search results will have the filtered booksArray
       setSearchResults(bookList)
@@ -60,8 +58,7 @@ function App() {
       setSearchResults(booksArray)
     }
   }
-console.log('all the books with search keyword in it',searchResults)
-
+  console.log('all the books with search keyword in it', searchResults)
 
 
   // const getComics= () =>{
@@ -79,9 +76,6 @@ console.log('all the books with search keyword in it',searchResults)
   // console.log('testing for map', books.docs)
 
   return (
-
-
-
     <>
       <div className='container'>
         {/* {JSON.stringify(books)} */}
@@ -90,7 +84,7 @@ console.log('all the books with search keyword in it',searchResults)
         <Search search={search} searchResults={getSearchResults} />
 
 
-{/* loop through booksArray */}
+        {/* loop through booksArray */}
         <ul className='list'>
           {booksArray &&
             booksArray.map((book, i) => {
